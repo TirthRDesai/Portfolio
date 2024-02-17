@@ -103,7 +103,7 @@ function Navbar({ setShowing }) {
 
     return (
         <div className='flex flex-col w-[100vw] overflow-x-hidden fixed justify-start items-center z-50 h-12 '>
-            <nav className={NAVBARSTYLES.NavbarUnScrolled + ` h-[90%] py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-[0.3s] ease-in relative`}>
+            <nav className={NAVBARSTYLES.NavbarUnScrolled + ` h-[90%] py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-300 ease-in relative`}>
 
                 <button className={NAVBARSTYLES.button} data-text="Awesome" id='IntroductionNAVHeading' onClick={(e) => HeadingClicked(e, "Introduction")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Introduction&nbsp;</span>
