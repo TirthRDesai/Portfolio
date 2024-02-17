@@ -1,0 +1,9 @@
+.sendButton {
+	transition: all 0.7s;
+	border: 2px solid black;
+	width: 100%;
+}
+
+.required {
+	color: #ff5252;
+}

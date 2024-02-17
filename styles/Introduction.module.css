@@ -1,0 +1,12 @@
+.PortfolioImage {
+	background-position: top;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.Name::selection,
+.Information::selection,
+.greetings::selection {
+	background-color: transparent;
+	color: #0900ff;
+}

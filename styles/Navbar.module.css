@@ -1,0 +1,79 @@
+.NavScrolled {
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+	/* box-shadow: none !important; */
+
+	margin-top: 10px;
+	/* clip-path: circle(); */
+	margin-top: 10px;
+	border-radius: 9999px;
+	width: calc(60%) !important;
+	height: 80%;
+	padding: 10px 0px;
+}
+
+.NavbarUnScrolled {
+	-webkit-box-shadow: 0px 25px 36px 4px rgba(120, 120, 120, 1);
+	-moz-box-shadow: 0px 25px 36px 4px rgba(120, 120, 120, 1);
+	box-shadow: 0px 25px 36px 4px rgba(120, 120, 120, 1);
+	clip-path: none;
+	width: 100%;
+}
+
+.button {
+	margin: 0;
+	height: auto;
+	background: transparent;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+}
+
+:is(.button, .hoverText, .actualText)::selection {
+	background: none;
+}
+
+.button {
+	--border-right: 0px;
+	--text-stroke-color: #fff700;
+	--animation-color: #37ff8b;
+	--fs-size: 1em;
+	letter-spacing: 1px;
+	text-decoration: none;
+	font-size: var(--fs-size);
+	outline: none;
+	font-family: "Arial";
+	z-index: 100;
+	position: relative;
+	text-transform: capitalize;
+	color: transparent;
+	-webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+.hoverText {
+	position: absolute;
+	box-sizing: border-box;
+	content: attr(data-text);
+	color: var(--animation-color);
+	width: 0%;
+	filter: none;
+	inset: 0;
+	border-right: var(--border-right) solid var(--animation-color);
+	overflow: hidden;
+	transition: 0.5s;
+	-webkit-text-stroke: 1px var(--animation-color);
+}
+/* hover */
+
+.button:hover .hoverText {
+	width: 100%;
+	filter: drop-shadow(0 0 23px var(--animation-color));
+}
+
+.clicked {
+	color: #b9e2f5;
+	-webkit-text-stroke: 1px #b9e2f5;
+	width: 100%;
+	filter: drop-shadow(0 0 23px #b9e2f5);
+}
