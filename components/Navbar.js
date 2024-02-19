@@ -57,21 +57,27 @@ function Navbar({ setShowing }) {
                     navbar.classList.remove(NAVBARSTYLES.NavScrolled)
                 }
             } else {
+                navbar.style.height = 'calc(90% + 20px)'
+                navbar.parentElement.style.paddingTop = "0px"
+                navbar.style.overflowY = "hidden"
                 const items = navbar.children
+
+                for (let item of items) {
+                    item.style.padding = "10px 0px"
+                }
+
                 navbar.classList.replace('flex-row', 'flex-col')
                 navbar.style.flexDirection = 'column'
-                navbar.style.justifyContent = 'center'
+                navbar.style.justifyContent = 'space-around'
+                navbar.style.gap = '12px'
                 navbar.style.alignItems = 'center'
                 navbar.style.height = items[0].getBoundingClientRect().height + 'px'
-
-                // navbar.style.minHeight = '64px'
                 navbar.style.paddingTop = '12px'
                 navbar.style.paddingBottom = '12px'
 
                 navbar.style.minWidth = '360px'
                 navbar.style.padding = "0px"
-
-
+                navbar.isOpened = false
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].tagName.toLowerCase() === 'a') {
                     } else {
@@ -81,6 +87,26 @@ function Navbar({ setShowing }) {
                 if (window.scrollY > 0) {
                     navbar.classList.remove(NAVBARSTYLES.NavScrolled)
                 }
+
+
+                navbar.addEventListener('click', (e) => {
+                    if (navbar.isOpened) {
+                        navbar.style.height = items[0].getBoundingClientRect().height + 'px'
+                        navbar.style.padding = "0px"
+                        navbar.isOpened = false
+
+                        navbar.style.height = items[0].getBoundingClientRect().height + 20 + 'px'
+                        return
+                    }
+                    for (let item of items) {
+                        item.style.padding = "0"
+                    }
+                    navbar.isOpened = true
+                    navbar.parentElement.style.minHeight = items[0].getBoundingClientRect().height * 10 + "px"
+                    navbar.style.height = items[0].getBoundingClientRect().height * 11 + "px"
+
+                    navbar.style.padding = "12px 0px"
+                })
             }
         }
     }, [device])
@@ -102,8 +128,10 @@ function Navbar({ setShowing }) {
     }
 
     return (
-        <div className='flex flex-col w-[100vw] overflow-x-hidden fixed justify-start items-center z-50 h-12 '>
-            <nav className={NAVBARSTYLES.NavbarUnScrolled + ` h-[90%] py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-300 ease-in relative`}>
+        <div className='flex flex-col w-[100vw] overflow-x-hidden fixed justify-start items-center z-50' style={{
+            height: '100%'
+        }}>
+            <nav className={NAVBARSTYLES.NavbarUnScrolled + ` py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-300 ease-in relative`}>
 
                 <button className={NAVBARSTYLES.button} data-text="Awesome" id='IntroductionNAVHeading' onClick={(e) => HeadingClicked(e, "Introduction")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Introduction&nbsp;</span>

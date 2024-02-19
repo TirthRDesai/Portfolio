@@ -15,7 +15,7 @@ export const ThemeContext = createContext(null)
 
 function Home() {
     const [theme, setTheme] = useState(light)
-    const [device, setDevice] = useState('PC')
+    const [device, setDevice] = useState()
     const [showing, setShowing] = useState("Introduction")
 
     const [scrolled, setScrolled] = useState(0)
@@ -42,9 +42,31 @@ function Home() {
 
                 setScrolled(window.scrollY)
             }
-        } else {
+        } else if (device == "MOBILE") {
+            const windowHeight = window.innerHeight
+
+            const heights = [0, windowHeight / 1.5, windowHeight + (windowHeight / 1.5), 2 * windowHeight + (windowHeight / 1.5), 3 * windowHeight + (windowHeight / 1.5), 4 * windowHeight + (windowHeight / 1.5)]
+
             window.onscroll = (e) => {
-                e.preventDefault()
+                const sections = ["Introduction", "About", "Skills", "Projects", "Contact"]
+                const navbar = document.querySelector('nav')
+
+                const items = navbar.children
+                if (navbar.isOpened) {
+                    navbar.style.height = items[0].getBoundingClientRect().height + 'px'
+                    navbar.style.padding = "0px"
+                    navbar.isOpened = false
+
+                    navbar.style.height = items[0].getBoundingClientRect().height + 20 + 'px'
+                }
+
+                for (let i = 0; i < sections.length; i++) {
+                    if (window.scrollY > heights[i] && window.scrollY < heights[i + 1]) {
+                        setShowing(sections[i])
+                    }
+                }
+
+                setScrolled(window.scrollY)
             }
         }
     }, [device])
@@ -68,6 +90,12 @@ function Home() {
 
 
     useEffect(() => {
+        const deviceWidth = window.innerWidth
+        if (deviceWidth < 768) {
+            setDevice('MOBILE')
+        } else {
+            setDevice('PC')
+        }
         setInterval(() => {
             const deviceWidth = window.innerWidth
             if (deviceWidth < 768) {
@@ -78,11 +106,7 @@ function Home() {
         }, 1000)
     }, [])
 
-    useEffect(() => {
-        if (showing) {
 
-        }
-    }, [showing])
 
     return (
         <ThemeContext.Provider value={{ theme, device, showing, scrolled }}>

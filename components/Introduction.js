@@ -182,7 +182,7 @@ function Introduction() {
                 borderColor: theme.borderColor,
                 overflow: 'hidden'
             }} >
-                <Image src={PortfolioImage} alt="Portfolio Image" width={300} height={300} />
+                <Image src={PortfolioImage} alt="Portfolio Image" width={300} height={300} priority />
             </div>
 
         </div>
