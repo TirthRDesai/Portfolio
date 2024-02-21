@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import NAVBARSTYLES from '@/styles/Navbar.module.css'
 import { ThemeContext } from '@/pages'
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 
 
 function Navbar({ setShowing }) {
@@ -31,89 +29,57 @@ function Navbar({ setShowing }) {
     }, [ThemeCon])
 
     useEffect(() => {
-        if (device) {
-            const navbar = document.querySelector('nav')
-            if (device == "PC") {
-                navbar.style.flexDirection = 'row'
-                navbar.style.justifyContent = 'space-evenly'
-                navbar.style.height = '100%'
-                navbar.parentElement.style.maxHeight = "80px"
-                navbar.parentElement.style.height = "auto"
-                navbar.style.paddingTop = ''
-                navbar.style.paddingBottom = ''
-                // navbar.style.minHeight = ''
-                navbar.style.minWidth = '360px'
-                const items = navbar.children
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i].tagName.toLowerCase() === 'button') {
-                    } else {
-                        items[i].style.display = 'none'
-                    }
+        if (device == "PC") {
+            const navbar = document.querySelector('#pcnav')
+            navbar.style.flexDirection = 'row'
+            navbar.style.justifyContent = 'space-evenly'
+            navbar.style.height = '100%'
+            navbar.parentElement.style.maxHeight = "80px"
+            navbar.parentElement.style.height = "auto"
+            navbar.style.paddingTop = ''
+            navbar.style.paddingBottom = ''
+            navbar.style.minWidth = '360px'
+            const items = navbar.children
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].tagName.toLowerCase() === 'button') {
+                } else {
+                    items[i].style.display = 'none'
                 }
+            }
 
+            if (window.scrollY > 0) {
+                navbar.classList.add(NAVBARSTYLES.NavScrolled)
+            } else {
+                navbar.classList.remove(NAVBARSTYLES.NavScrolled)
+            }
+
+            const windowHeight = window.innerHeight
+
+            const heights = [0, windowHeight / 1.5, windowHeight + (windowHeight / 1.5), 2 * windowHeight + (windowHeight / 1.5), 3 * windowHeight + (windowHeight / 1.5), 4 * windowHeight + (windowHeight / 1.5)]
+
+            window.onscroll = (e) => {
+                const navbar = document.querySelector('#pcnav')
                 if (window.scrollY > 0) {
                     navbar.classList.add(NAVBARSTYLES.NavScrolled)
                 } else {
                     navbar.classList.remove(NAVBARSTYLES.NavScrolled)
                 }
-            } else {
-                navbar.style.height = 'calc(90% + 20px)'
-                navbar.parentElement.style.paddingTop = "0px"
-                navbar.style.overflowY = "hidden"
-                const items = navbar.children
 
-                for (let item of items) {
-                    item.style.padding = "10px 0px"
-                }
-
-                navbar.classList.replace('flex-row', 'flex-col')
-                navbar.style.flexDirection = 'column'
-                navbar.style.justifyContent = 'space-around'
-                navbar.style.gap = '12px'
-                navbar.style.alignItems = 'center'
-                navbar.style.height = items[0].getBoundingClientRect().height + 'px'
-                navbar.style.paddingTop = '12px'
-                navbar.style.paddingBottom = '12px'
-
-                navbar.style.minWidth = '360px'
-                navbar.style.padding = "0px"
-                navbar.isOpened = false
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i].tagName.toLowerCase() === 'a') {
-                    } else {
-                        items[i].style.display = 'block'
+                const sections = ["Introduction", "About", "Skills", "Projects", "Contact"]
+                for (let i = 0; i < sections.length; i++) {
+                    if (window.scrollY > heights[i] && window.scrollY < heights[i + 1]) {
+                        setShowing(sections[i])
                     }
                 }
-                if (window.scrollY > 0) {
-                    navbar.classList.remove(NAVBARSTYLES.NavScrolled)
-                }
 
-
-                navbar.addEventListener('click', (e) => {
-                    if (navbar.isOpened) {
-                        navbar.style.height = items[0].getBoundingClientRect().height + 'px'
-                        navbar.style.padding = "0px"
-                        navbar.isOpened = false
-
-                        navbar.style.height = items[0].getBoundingClientRect().height + 20 + 'px'
-                        return
-                    }
-                    for (let item of items) {
-                        item.style.padding = "0"
-                    }
-                    navbar.isOpened = true
-                    navbar.parentElement.style.minHeight = items[0].getBoundingClientRect().height * 10 + "px"
-                    navbar.style.height = items[0].getBoundingClientRect().height * 11 + "px"
-
-                    navbar.style.padding = "12px 0px"
-                })
+                setScrolled(window.scrollY)
             }
         }
-    }, [device])
+    }, [setShowing, device])
 
     useEffect(() => {
         if (theme) {
-            const navbar = document.querySelector('nav')
+            const navbar = document.querySelector('#pcnav')
             navbar.style.backgroundColor = theme.navbg
         }
     }, [theme])
@@ -127,11 +93,29 @@ function Navbar({ setShowing }) {
         setShowing(heading)
     }
 
+    useEffect(() => {
+        const allIds = ["IntroductionNAVHeading", "AboutNAVHeading", "SkillsNAVHeading", "ProjectsNAVHeading", "ContactNAVHeading"]
+
+        const a = document.getElementById(currentSection + "NAVHeading")
+        const hoverText = a.children[1]
+
+        hoverText.classList.add(NAVBARSTYLES.clicked)
+
+        for (let i = 0; i < allIds.length; i++) {
+            if (allIds[i] != currentSection + "NAVHeading") {
+                const a = document.getElementById(allIds[i])
+                const hoverText = a.children[1]
+                hoverText.classList.remove(NAVBARSTYLES.clicked)
+            }
+        }
+
+    }, [currentSection])
+
     return (
         <div className='flex flex-col w-[100vw] overflow-x-hidden fixed justify-start items-center z-50' style={{
             height: '100%'
         }}>
-            <nav className={NAVBARSTYLES.NavbarUnScrolled + ` py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-300 ease-in relative`}>
+            <nav id='pcnav' className={NAVBARSTYLES.NavbarUnScrolled + ` py-[10px] flex flex-row justify-evenly items-center z-50 transition-all duration-300 ease-in relative`}>
 
                 <button className={NAVBARSTYLES.button} data-text="Awesome" id='IntroductionNAVHeading' onClick={(e) => HeadingClicked(e, "Introduction")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Introduction&nbsp;</span>
@@ -152,14 +136,7 @@ function Navbar({ setShowing }) {
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Projects&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Projects&nbsp;</span>
                 </button>
-                {
-                    //     <a href='#' className='NAVHeadings text-white text-xl mr-4' id='ExperienceNAVHeading'>
-                    //     <button className={NAVBARSTYLES.button} data-text="Awesome">
-                    //         <span className={NAVBARSTYLES.actualText}>&nbsp;Experience&nbsp;</span>
-                    //         <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Experience&nbsp;</span>
-                    //     </button>
-                    // </a>
-                }
+
                 <button className={NAVBARSTYLES.button} data-text="Awesome"
                     id='ContactNAVHeading' onClick={(e) => HeadingClicked(e, "Contact")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Contact&nbsp;</span>

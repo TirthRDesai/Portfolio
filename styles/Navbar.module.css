@@ -20,6 +20,19 @@
 	width: 100%;
 }
 
+.mobnav {
+	transition: all 0.7s linear;
+}
+
+.mobnav button {
+	transition: all 0.7s linear;
+}
+
+.showBtn {
+	height: 100%;
+	overflow: hidden;
+}
+
 .button {
 	margin: 0;
 	height: auto;
@@ -27,6 +40,7 @@
 	padding: 0;
 	border: none;
 	cursor: pointer;
+	transition: all 0.7s ease-in-out;
 }
 
 :is(.button, .hoverText, .actualText)::selection {
@@ -43,6 +57,7 @@
 	font-size: var(--fs-size);
 	outline: none;
 	font-family: "Arial";
+	transition: all 0.7s linear;
 	z-index: 100;
 	position: relative;
 	text-transform: capitalize;
