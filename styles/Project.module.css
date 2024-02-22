@@ -1,0 +1,141 @@
+.gridContainer {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	justify-items: center;
+	align-items: center;
+	overflow: hidden;
+	@media (max-width: 934px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: 574px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.gridContainer::-webkit-scrollbar {
+	width: 0;
+}
+
+/* @media (max-width: 768px) {
+	.gridContainer {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 480px) {
+	.gridContainer {
+		grid-template-columns: 1fr;
+	}
+} */
+
+.cardContainer {
+	width: 20vw;
+	height: 20vw;
+	aspect-ratio: 1/1;
+	position: relative;
+	border-radius: 10px;
+
+	transition: all 0.7s linear;
+}
+
+@media (max-width: 934px) {
+	.cardContainer {
+		width: 200px;
+		height: 200px;
+	}
+}
+
+@media (max-width: 574px) {
+	.cardContainer {
+		width: 230px;
+		height: 230px;
+	}
+}
+
+@media (max-width: 480px) {
+	.boxes {
+		width: 100%;
+		height: 100%;
+	}
+
+	.cardContainer {
+		width: 100%;
+		min-height: 100px;
+		height: 100%;
+	}
+}
+
+.cardContainer::before {
+	content: "";
+	z-index: -1;
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(-45deg, #f89b29 0%, #ff0f7b 100%);
+	transform: translate3d(0, 0, 0) scale(0.95);
+	filter: blur(20px);
+}
+
+.card {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	overflow: hidden;
+}
+
+.card .imgContent {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(-45deg, #f89b29 0%, #ff0f7b 100%);
+	transition: scale 0.6s, rotate 0.6s, filter 1s;
+}
+
+.card .content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 10px;
+	color: black;
+	padding: 20px;
+	line-height: 1.5;
+	border-radius: 5px;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(50px);
+	transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card .content .heading {
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.card:hover .content {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.card:hover .imgContent {
+	scale: 3;
+	rotate: 30deg;
+	filter: blur(15px);
+}
+
+.card:hover .imgContent svg {
+	fill: transparent;
+}
+
+.visitbtn {
+	color: black;
+}

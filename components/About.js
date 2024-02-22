@@ -2,7 +2,9 @@ import React from 'react'
 
 function About() {
     return (
-        <div className='w-[100vw] h-[100vh] grid place-items-center' id='About'>About</div>
+        <div className='w-[100vw] h-[100vh] bg-yellow-500 grid place-items-center' id='About'>
+
+        </div>
     )
 }
 

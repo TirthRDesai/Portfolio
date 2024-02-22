@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import NAVBARSTYLES from '@/styles/Navbar.module.css'
 import { ThemeContext } from '@/pages'
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
+import { sectionHeights } from './sectionheights';
 
 
 function Navbar({ setShowing }) {
@@ -55,7 +56,23 @@ function Navbar({ setShowing }) {
 
             const windowHeight = window.innerHeight
 
-            const heights = [0, windowHeight / 1.5, windowHeight + (windowHeight / 1.5), 2 * windowHeight + (windowHeight / 1.5), 3 * windowHeight + (windowHeight / 1.5), 4 * windowHeight + (windowHeight / 1.5)]
+            const heights = [0]
+
+            const cumulative = []
+            for (let i = 0; i < sectionHeights.length; i++) {
+                if (i == 0) {
+                    cumulative.push(sectionHeights[i])
+                } else {
+                    cumulative.push(cumulative[i - 1] + sectionHeights[i])
+                }
+            }
+
+            const partialHeight = windowHeight / 3
+
+            for (let i = 1; i < sectionHeights.length; i++) {
+                const tempHeight = cumulative[i - 1] * windowHeight + (sectionHeights[i] - 1) * windowHeight + partialHeight
+                heights.push(tempHeight)
+            }
 
             window.onscroll = (e) => {
                 const navbar = document.querySelector('#pcnav')
@@ -66,9 +83,10 @@ function Navbar({ setShowing }) {
                 }
 
                 const sections = ["Introduction", "About", "Skills", "Projects", "Contact"]
-                for (let i = 0; i < sections.length; i++) {
-                    if (window.scrollY > heights[i] && window.scrollY < heights[i + 1]) {
-                        setShowing(sections[i])
+                for (let i = 1; i < heights.length; i++) {
+                    if (window.scrollY < heights[i]) {
+                        setShowing(sections[i - 1])
+                        break
                     }
                 }
 

@@ -5,7 +5,7 @@ import { dark, light } from './Themes';
 import { ThemeContext } from '@/pages';
 
 function ThemeChanger({ Theme, setTheme }) {
-    const ThemeCon = useContext(ThemeContext)
+    const { device } = useContext(ThemeContext)
 
     const [hoverColor, setHoverColor] = useState('#ccc')
 
@@ -19,7 +19,11 @@ function ThemeChanger({ Theme, setTheme }) {
     }, [Theme])
 
     return (
-        <span className=' bottom-4 right-4 border-2 rounded-full border-collapse z-40 fixed'>
+        <span className=' bottom-4 right-4 border-2 rounded-full border-collapse z-40 fixed'
+            style={{
+                scale: device == 'PC' ? '1' : '0.6'
+            }}
+        >
 
 
             <label className="bb8-toggle" onClick={(e) => {

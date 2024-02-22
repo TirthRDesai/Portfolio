@@ -4,6 +4,7 @@ import { ThemeContext } from '@/pages'
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { sectionHeights } from './sectionheights';
 
 
 function MobileNavbar({ setShowing, mobNavOpened, setMobNavOpened }) {
@@ -53,7 +54,8 @@ function MobileNavbar({ setShowing, mobNavOpened, setMobNavOpened }) {
             const mainLayout = nav.parentElement;
             const buttons = nav.children
             if (mobNavOpened) {
-                mainLayout.style.height = "14rem";
+                mainLayout.style.height = "14rem"
+                nav.style.justifyContent = 'space-evenly'
                 for (let i = 0; i < buttons.length; i++) {
                     buttons[i].style.display = "";
                     buttons[i].style.opacity = "1";
@@ -61,7 +63,7 @@ function MobileNavbar({ setShowing, mobNavOpened, setMobNavOpened }) {
 
             } else {
 
-                mainLayout.style.height = "4rem";
+                mainLayout.style.height = "2.7rem";
                 if (currentSection != showing) {
                     for (let i = 0; i < buttons.length; i++) {
                         if (!buttons[i].id.includes(showing)) {
@@ -84,19 +86,32 @@ function MobileNavbar({ setShowing, mobNavOpened, setMobNavOpened }) {
 
         const windowHeight = window.innerHeight
 
-        const heights = [0, windowHeight / 1.5, windowHeight + (windowHeight / 1.5), 2 * windowHeight + (windowHeight / 1.5), 3 * windowHeight + (windowHeight / 1.5), 4 * windowHeight + (windowHeight / 1.5)]
+        const heights = [0]
 
-        if (window.scrollY > heights[4]) {
-            setShowing('Contact')
-        } else if (window.scrollY > heights[3]) {
-            setShowing('Projects')
-        } else if (window.scrollY > heights[2]) {
-            setShowing('Skills')
-        } else if (window.scrollY > heights[1]) {
-            setShowing('About')
-        } else if (window.scrollY > heights[0]) {
-            setShowing('Introduction')
+        const cumulative = []
+        for (let i = 0; i < sectionHeights.length; i++) {
+            if (i == 0) {
+                cumulative.push(sectionHeights[i])
+            } else {
+                cumulative.push(cumulative[i - 1] + sectionHeights[i])
+            }
         }
+
+        const partialHeight = windowHeight * 0.15
+
+        for (let i = 1; i < sectionHeights.length; i++) {
+            const tempHeight = cumulative[i - 1] * windowHeight + (sectionHeights[i] - 1) * windowHeight + partialHeight
+            heights.push(tempHeight)
+        }
+
+        const sections = ["Introduction", "About", "Skills", "Projects", "Contact"]
+        for (let i = 1; i < heights.length; i++) {
+            if (window.scrollY < heights[i]) {
+                setShowing(sections[i - 1])
+                break
+            }
+        }
+
     }
 
     const OpenNavbar = (e) => {
@@ -114,30 +129,30 @@ function MobileNavbar({ setShowing, mobNavOpened, setMobNavOpened }) {
     }
 
     return (
-        <div className='flex flex-col w-[100vw] overflow-hidden h-[4rem] border-b-4 border-black fixed justify-center transition-all duration-700 items-center z-50'>
+        <div className='flex flex-col w-[100vw] overflow-hidden border-b-4 border-black fixed justify-center transition-all duration-700 items-center z-50'>
             <nav id="mobnav" className={NAVBARSTYLES.NavbarUnScrolled + ' ' + NAVBARSTYLES.mobnav + ` flex gap-4 flex-col justify-evenly h-full items-center overflow-hidden z-50 transition-all duration-300 ease-in relative`} onClick={(e) => OpenNavbar(e)}>
 
 
-                <button className={NAVBARSTYLES.button + " my-[10px]"} data-text="Awesome" id='IntroductionNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Introduction")}>
+                <button className={NAVBARSTYLES.button} data-text="Awesome" id='IntroductionNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Introduction")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Introduction&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Introduction&nbsp;</span>
                 </button>
 
-                <button className={NAVBARSTYLES.button + " my-[10px]"} data-text="Awesome" id='AboutNAVHeadingMob' onClick={(e) => HeadingClicked(e, "About")}>
+                <button className={NAVBARSTYLES.button} data-text="Awesome" id='AboutNAVHeadingMob' onClick={(e) => HeadingClicked(e, "About")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;About&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;About&nbsp;</span>
                 </button>
 
-                <button className={NAVBARSTYLES.button + " my-[10px]"} data-text="Awesome" id='SkillsNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Skills")}>
+                <button className={NAVBARSTYLES.button} data-text="Awesome" id='SkillsNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Skills")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Skills&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Skills&nbsp;</span>
                 </button>
-                <button className={NAVBARSTYLES.button + " my-[10px]"} data-text="Awesome"
+                <button className={NAVBARSTYLES.button} data-text="Awesome"
                     id='ProjectsNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Projects")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Projects&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Projects&nbsp;</span>
                 </button>
-                <button className={NAVBARSTYLES.button + " my-[10px]"} data-text="Awesome"
+                <button className={NAVBARSTYLES.button} data-text="Awesome"
                     id='ContactNAVHeadingMob' onClick={(e) => HeadingClicked(e, "Contact")}>
                     <span className={NAVBARSTYLES.actualText}>&nbsp;Contact&nbsp;</span>
                     <span aria-hidden="true" className={NAVBARSTYLES.hoverText}>&nbsp;Contact&nbsp;</span>

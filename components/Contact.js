@@ -87,15 +87,6 @@ function Contact() {
     }, [theme])
 
 
-    // useEffect(() => {
-    //     if (theme.type === light) {
-    //         setClassNameForButton('light')
-    //     } else {
-    //         setClassNameForButton('dark')
-    //     }
-    // }, [theme])
-
-
     const [details, setDetails] = useState({
         fname: '',
         lname: '',
@@ -127,6 +118,7 @@ function Contact() {
     return (
         <div className={`w-[100vw] h-[100vh] flex flex-col items-center justify-evenly transition-all duration-700`} style={{
             backgroundColor: theme.body,
+
         }} id='Contact'>
 
             <form onSubmit={(e) => formSubmitted(e)} className='mt-[5%] overflow-hidden w-full flex items-center justify-center' autoComplete='none'>
