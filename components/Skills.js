@@ -137,8 +137,8 @@ function Skills() {
             }}>Skills</h1>
             <div className="w-fit h-full" style={{
                 display: 'grid',
-                gridTemplateAreas: device == 'MOBILE' ? 'auto auto auto auto' : window.innerWidth < 960 ? 'repeat(4, 1fr)' : 'repeat(6, auto)',
-                gridTemplateColumns: device == 'MOBILE' ? 'auto auto auto auto' : window.innerWidth < 960 ? 'repeat(4, 1fr)' : 'repeat(6, auto)',
+                gridTemplateAreas: device == 'MOBILE' ? 'auto auto auto auto' : 'repeat(4, 1fr)',
+                gridTemplateColumns: device == 'MOBILE' ? 'auto auto auto auto' : 'repeat(6, auto)',
                 justifyContent: 'center',
                 alignItems: 'center',
                 fontSize: '3rem',
