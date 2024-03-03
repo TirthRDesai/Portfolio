@@ -13,10 +13,7 @@ const Card = ({ title, description, image, link = 'Visit', website }) => {
     const cardRef = useRef(null)
     const [prevScroll, setPrevScroll] = useState(0)
 
-    const isInView = useInView(cardRef, {
-        triggerOnce: true,
-        threshold: 0.5
-    })
+    const [isInView, setIsInView] = useState(false)
 
     const { scrollY } = useScroll()
 
@@ -50,13 +47,18 @@ const Card = ({ title, description, image, link = 'Visit', website }) => {
                 y: 50
             }}
 
-            whileInView={{
-                opacity: 1,
-                y: 0,
+            onViewportEnter={() => {
+                if (!isInView) {
+                    setIsInView(true)
+                }
+            }}
+
+            animate={{
+                opacity: isInView ? 1 : 0,
+                y: isInView ? 0 : 50,
                 transition: {
-                    duration: 0.8,
-                    ease: 'easeOut',
-                    delay: device == 'PC' ? 0.3 : 0.1
+                    duration: 0.4,
+                    ease: 'easeInOut'
                 }
             }}
 

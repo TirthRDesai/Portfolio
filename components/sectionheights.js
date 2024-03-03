@@ -1,1 +1,1 @@
-export const sectionHeights = [0, 1, 1, 1, 2, 1]
+export const sectionHeights = [0, 1, 1, 1.4, 2, 1]
