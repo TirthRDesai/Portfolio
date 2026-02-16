@@ -217,7 +217,10 @@ function Home() {
 				className="relative w-full h-full hidden lg:block opacity-0 overflow-visible"
 				ref={imageRef}
 			>
-				<div className="absolute inset-0 rounded-md overflow-hidden" ref={imageClipRef}>
+				<div
+					className="absolute inset-0 rounded-md overflow-hidden"
+					ref={imageClipRef}
+				>
 					<div
 						className="absolute inset-0 bg-[url('/professional-image-no-bg.png')] bg-cover bg-center"
 						ref={professionalOverlayRef}

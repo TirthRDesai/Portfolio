@@ -10,6 +10,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 
+
 // const Home = lazy(() => import("@/components/Home"));
 // const About = lazy(() => import("@/components/About"));
 // const Skills = lazy(() => import("@/components/Skills"));
@@ -61,16 +62,16 @@ export default function Page() {
 	}, [isNavbarDone]);
 
 	return (
-		<div className="w-full overflow-x-hidden">
+		<div className="w-full overflow-x-hidden ">
 			<Navbar />
 			{isNavbarDone && (
 				<DotPattern
 					proximity={170}
 					glowIntensity={2}
-					className="w-full"
+					className="w-full "
 				>
 					<div
-						className="w-full flex flex-col"
+						className="w-full flex flex-col "
 						id="content-wrapper"
 						ref={contentRef}
 					>
