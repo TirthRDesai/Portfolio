@@ -182,26 +182,12 @@ function BigBubble({
 				const bubbleKey = b.name.trim().toLowerCase();
 				const pinnedTarget = pinnedTargetsRef.current.get(bubbleKey);
 				if (pinnedTarget) {
-					const dx = pinnedTarget.x - b.x;
-					const dy = pinnedTarget.y - b.y;
-					const dist = Math.hypot(dx, dy);
-					if (dist < 2) {
-						b.x = pinnedTarget.x;
-						b.y = pinnedTarget.y;
-						b.vx = 0;
-						b.vy = 0;
-					} else {
-						const nx = dx / dist;
-						const ny = dy / dist;
-						// Per-bubble pull behavior: selected bubbles can have custom pull speed.
-						const normalStep = b.maxSpeed * dt;
-						const pinnedStep = normalStep * b.pullSpeedMultiplier;
-						const step = Math.min(dist, pinnedStep);
-						b.x += nx * step;
-						b.y += ny * step;
-						b.vx = 0;
-						b.vy = 0;
-					}
+					// Smooth easing (Lerp) to target to avoid "snap" effect
+					const strength = 0.12;
+					b.x += (pinnedTarget.x - b.x) * strength * dt;
+					b.y += (pinnedTarget.y - b.y) * strength * dt;
+					b.vx = 0;
+					b.vy = 0;
 					continue;
 				}
 
